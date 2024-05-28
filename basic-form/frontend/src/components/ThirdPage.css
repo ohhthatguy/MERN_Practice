@@ -1,0 +1,42 @@
+.Form_container{
+    display: grid;
+    place-items: center; 
+  width: 80%;
+
+}
+
+.Form_container header{
+    background-color: rgb(139, 44, 228);
+    color: white;
+    /* border: 1px solid black; */
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-family: fantasy;
+}
+
+.confirmationPage_wrapper{
+    padding-top: 1rem;
+    /* border: 1px solid black; */
+    display: grid;
+    row-gap: 2rem;
+    width: 100%;
+    place-items: center;
+    padding-bottom: 1rem;
+    
+}
+
+.userDetail_div{
+    /* border: 2px solid black; */
+    width: 100%;
+    text-align: center;
+    font-size: 1.34rem;
+
+}
+
+.userDetail_div div{
+    font-size: large;
+
+}
+
+

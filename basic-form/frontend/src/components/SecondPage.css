@@ -1,0 +1,59 @@
+.Form_container{
+    display: grid;
+    place-items: center; 
+    width: 80%;
+    margin-left: 6vw;
+ 
+ }
+ 
+ .Form_container header{
+     /* border: 1px solid black; */
+     width: 100%;
+     text-align: center;
+     font-size: 2rem;
+     font-family: fantasy;
+     background-color: rgb(139, 44, 228);
+     color: white;
+ 
+ }
+ 
+ .Form_wrapper{
+     padding-top: 1rem;
+     /* border: 1px solid black; */
+     display: grid;
+     row-gap: 2rem;
+     width: 100%;
+     place-items: center;
+     padding-bottom: 1rem;
+ 
+ }
+ 
+ .firstInput{
+     display: grid;
+ }
+ 
+ .firstInput input{
+     height: 2rem;
+     width: 15rem;
+ 
+ }
+ 
+ .secondInput{
+     display: grid;
+ }
+ 
+ .secondInput input{
+     height: 2rem;
+     width: 15rem;
+ }
+ 
+ .thirdInput{
+     display: grid;
+ }
+ 
+ .thirdInput input{
+     height: 2rem;
+     width: 15rem;
+ }
+ 
+ 
