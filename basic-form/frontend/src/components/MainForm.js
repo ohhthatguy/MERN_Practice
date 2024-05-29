@@ -8,9 +8,6 @@ import ThirdPage from './ThirdPage'
 import FourthPage from './FourthPage'
 
 const MainForm = () => {
-
-    // const {count} = useContext(GlobalContext)
-
   return (
     <div>
 
@@ -21,11 +18,8 @@ const MainForm = () => {
             <Route path='/fourthPage' element={ <FourthPage /> } />
       </Routes>
   
-
     </div>
 
   )
-
 }
-
 export default MainForm

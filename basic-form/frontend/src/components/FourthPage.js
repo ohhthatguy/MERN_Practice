@@ -6,22 +6,15 @@ import axios from 'axios'
 
 const FourthPage = () => {
 
-  const {setFirstPageData, setSecondPageData, state, update, setUpdate, counts} = useContext(GlobalContext)
+  const {setFirstPageData, updateFlag, setSecondPageData, setTargetId, counts} = useContext(GlobalContext)
   const isLoadedFirstTime = useRef(true);
   const [userData, setUserData] = useState();
   const [isDeleted, setIsDeleted] = useState(0)
-  // const [isUpdated, setIsUpdated] = useState(0)
-  // const [dataOfId, setDataOfId] = useState({
-  //   fName: '',
-  //   lName:'',
-  //   email:'',
-  //   occupation: '',
-  //   city: '',
-  //   bio: ''
-  // })
+
+ 
 
    //GET
-        const getDataFromDb = async()=>{
+const getDataFromDb = async()=>{
         console.log("here")
 
           await axios.get('http://localhost:3001/getData')
@@ -29,7 +22,7 @@ const FourthPage = () => {
           .catch(err=> console.log(err))
         }
 
-        useEffect(()=>{
+useEffect(()=>{
           if(isLoadedFirstTime.current){
             isLoadedFirstTime.current=false
             return
@@ -53,30 +46,6 @@ const FourthPage = () => {
       bio:''
     })
   }
-
-  // useEffect(()=>{
-
-  //   if(isUpdated.current){
-  //     isUpdated.current=false
-  //     return
-  //  }
-
-  //  console.log(dataOfId)
-
-
-  // //   setFirstPageData({
-  // //     fName: dataOfId.fName,
-  // //     lName: dataOfId.lName,
-  // //     email: dataOfId.email
-  // // })
-
-  // // setSecondPageData({
-  // //     occupation: dataOfId.occupation,
-  // //     city: dataOfId.city,
-  // //     bio:dataOfId.bio
-  // // })
-
-  // }, [dataOfId])
 
   async function getDataById(id){
     await axios.get(`http://localhost:3001/getData/${id}`)
@@ -103,15 +72,10 @@ const FourthPage = () => {
 
 
   async function handleUpdate(id){
-    console.log(id)
-
     // get data of that id
     getDataById(id);
-   setUpdate(prev=>prev+1)
-    // update
-    await axios.patch(`http://localhost:3001/updateData/${id}`, {...state})
-    .then(res=> console.log(res))
-    .catch(err=> console.log(err))
+    updateFlag.current = true
+    setTargetId(id)
   }
 
   async function handleDelete(id){
@@ -128,34 +92,54 @@ const FourthPage = () => {
     </div>
 
     <div>
-        {/* <Link to='/'> */}
+        <Link to='/'>
         <button  onClick={handleClick}>fill next userData</button>
-        {/* </Link> */}
+        </Link>
       </div>
 
+    <table className='resultTable'>
+      <thead>
+      <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>Occupation</th>
+        <th>City</th>
+        <th>Bio</th>
+        <th>Options</th>
+
+      </tr>
+      </thead>
+      <tbody>
       {
         (userData) && 
         
         userData.map((e)=>(
-          <div key={e._id}>
-            <div>
-              <span>{e.fName}</span>
-              <span>{e.lName}</span>
-              <span>{e.email}</span>
-              <span>{e.occupation}</span>
-              <span>{e.city}</span>
-              <span>{e.bio}</span>
-            </div>
+          <tr key={e._id}>
 
-            <Link to='/'>
-            <button onClick={()=>handleUpdate(e._id)}>UPDATE</button>
-            </Link>
+                <td>{e.fName}</td>
+                <td>{e.lName}</td>
+                <td>{e.email}</td>
+                <td>{e.occupation}</td>
+                <td>{e.city}</td>
+                <td>{e.bio}</td>
+                <td>
+            
+                    <Link to='/'>
+                  <button onClick={()=>handleUpdate(e._id)}>UPDATE</button>
+                  </Link>
 
-            <button onClick={()=>handleDelete(e._id)}>DELETE</button>
-          </div>
+                  <button onClick={()=>handleDelete(e._id)}>DELETE</button>
+                 
+                </td>
+
+          </tr>
         ))
 
       }
+      </tbody>
+    </table>
+
   </>)
 }
 

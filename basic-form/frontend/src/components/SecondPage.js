@@ -11,8 +11,6 @@ const SecondPage = () => {
         loadSecondPage(secondPageData) 
     }
 
-
-
   return (
     <div>
 
@@ -45,7 +43,6 @@ const SecondPage = () => {
                     <Link to='/thirdPage'>
                     <button className='contBtn1' onClick={handleClick} type='submit'>Continue</button>
                     </Link> :
-                    // onClick={handleClick}
                     <button className='contBtn' disabled>Continue</button> 
                 }
                 
@@ -53,9 +50,6 @@ const SecondPage = () => {
             </div>
 
     </form>
-
-   
-
 
     </div>
     )

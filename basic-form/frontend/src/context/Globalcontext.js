@@ -3,27 +3,15 @@ import React, {useState, createContext, useReducer, useRef} from "react"
 //create context
 export const GlobalContext = createContext()
 
-
-
 //reducer function
 
 function reducer(state,action){
-    const empty = {
-        fName: '',
-        lName: '',
-        email: '',
-        occupation: '',
-        city: '',
-        bio: ''
-    }
     switch(action.type){
 
         case 'LOAD_FIRST_PAGE':
-            // console.log(action.payload)
             return {...state, ...action.payload}
             
         case 'LOAD_SECOND_PAGE':
-            // console.log(action.payload)
             return {...state, ...action.payload}
 
         default:
@@ -32,15 +20,13 @@ function reducer(state,action){
 }
 
 
-
 //create context provider
 export const GlobalProvider = ({children})=>{
 
 //creating counter
 const [counts, setCounts] = useState(1)
-const [update, setUpdate] = useState(1)
-
-
+const [targetId, setTargetId] = useState()
+let updateFlag = useRef(false)
 
 const [firstPageData, setFirstPageData] = useState({
     fName: '',
@@ -53,8 +39,6 @@ const [secondPageData, setSecondPageData] = useState({
     city: '',
     bio: ''
 })
-
-// const buttonRef = useRef(null);
 
 
 //useReducer
@@ -69,11 +53,8 @@ const [state, dispatch] = useReducer(reducer, {})
         dispatch({type: 'LOAD_SECOND_PAGE', payload: secondPageData})
     }
 
-    
-        
-        // console.log(state)
 
-    return(<GlobalContext.Provider value={{state, update, setUpdate, counts, setCounts, loadFirstPage, secondPageData, setSecondPageData,  loadSecondPage, firstPageData, setFirstPageData }} >
+    return(<GlobalContext.Provider value={{updateFlag ,state,targetId,setTargetId, counts, setCounts, loadFirstPage, secondPageData, setSecondPageData,  loadSecondPage, firstPageData, setFirstPageData }} >
             {children}
         </GlobalContext.Provider>)
 

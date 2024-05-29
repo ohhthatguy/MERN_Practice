@@ -4,11 +4,7 @@ import MainForm from './components/MainForm'
 
 const App = () => {
   return (<GlobalProvider>
-  <div>
-
-    <MainForm />
-
-    </div>
+              <MainForm />
     </GlobalProvider>)
 }
 

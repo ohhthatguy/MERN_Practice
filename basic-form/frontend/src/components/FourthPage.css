@@ -1,0 +1,25 @@
+.fourthContainer{
+    border: 1px solid black;
+}
+
+.resultTable{
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+    margin: 2rem 0px;
+    font-size: 0.9rem;
+    text-align: center;
+    
+   
+
+}
+
+.resultTable thead{
+    background-color: green;
+    color: white;
+   
+}
+
+.resultTable td{
+    border-bottom: 1px solid black;
+    padding: 0.5rem 0.3rem;
+}

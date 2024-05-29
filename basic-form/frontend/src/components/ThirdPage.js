@@ -1,39 +1,37 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import { GlobalContext } from '../context/Globalcontext'
 import './ThirdPage.css'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 const ThirdPage = () => {
-  const {state, update,setCounts} = useContext(GlobalContext)
+  const {state,setCounts,targetId, updateFlag} = useContext(GlobalContext)
 
-
-  async function handleClick(){
-    console.log(state)
+  async function handlePost(){
     //POST
-  
         await axios.post('http://localhost:3001/postData', {...state})
         .then(res=> console.log(res))
         .catch(err=> console.log(err))
     
         setCounts(prev=> prev+1)
-      
-  
   }
 
-  useEffect(()=>{
-
-    
   
-  },[update])
+  async function handleUpdate(){
+    //POST
+        await axios.patch(`http://localhost:3001/updateData/${targetId}`, {...state})
+        .then(res=> console.log(res))
+        .catch(err=> console.log(err))
+
+        updateFlag.current = false
+        setCounts(prev=> prev+1)
+
+  }
 
   return (
     <div className='Form_container'>
-
       <header>THis is a third header</header>
-
       <div className='confirmationPage_wrapper'>
-       
         {
 
           Object.entries(state).map(([key, value], index)=>(
@@ -50,7 +48,12 @@ const ThirdPage = () => {
       </Link>
 
       <Link to='/fourthPage'>
-        <button className='contBtn1' onClick={handleClick}>Continue</button>
+       { updateFlag.current == false ?
+        <button className='contBtn1' onClick={handlePost}>SAVE</button>
+        :
+        <button className='contBtn1' onClick={handleUpdate}>Update</button>
+       }
+
         </Link>
     </div>
 

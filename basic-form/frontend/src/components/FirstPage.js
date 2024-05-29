@@ -5,13 +5,11 @@ import { Link } from 'react-router-dom'
 
 const FirstPage = () => {
     const { loadFirstPage, setFirstPageData, firstPageData} = useContext(GlobalContext)
-
  
     function handleClick(){
         loadFirstPage(firstPageData)
     }
     
-
   return (
   
     <div className='Form_container'>
@@ -48,10 +46,7 @@ const FirstPage = () => {
                   
                     <button className='contBtn'  disabled>Continue</button>
                 }
-
-                
-
-            </div>
+          </div>
 
     </form>
 
