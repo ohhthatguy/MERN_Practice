@@ -1,7 +1,7 @@
 import React,{useState ,useEffect, useContext} from 'react'
 import { Box, Button, FormControl, InputBase, TextField, styled, TextareaAutosize } from '@mui/material'
 import {AddPhotoAlternateSharp as AddPhoto} from '@mui/icons-material';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../../context/DataProvider';
 import { API } from '../../services/Api';
 
@@ -46,6 +46,7 @@ const StyledTextareaAutosize = styled(TextareaAutosize)`
 const Home = () => {
 
     const {account} = useContext(DataContext)
+    const {id} = useParams();
 
     const initialUserInput = {
         title: '', // by Onchange function
@@ -69,6 +70,23 @@ const Home = () => {
         // console.log(post)
     }
 
+//to get other data change
+useEffect(()=>{
+    const fetchData = async()=>{
+    
+            let response = await API.getPostById(id)
+            if(response.isSuccess){
+                setPost(response.data)
+            }
+
+    }
+    fetchData();
+
+
+},[])
+
+
+//to handle change in image file
     useEffect(()=>{
 
             const handleImage= async()=>{
@@ -106,11 +124,11 @@ const Home = () => {
             }
 
             handleImage()
-            console.log("I am over category")
+            // console.log("I am over category")
             // console.log(`category: ${selectedCategory}`)
-            setPost({...post, userName: account.name, category: selectedCategory })
+            // setPost({...post, userName: account.name, category: selectedCategory })
       
-            console.log(post)
+            // console.log(post)
 
 },[file])
 
@@ -118,18 +136,19 @@ const Home = () => {
 
     const imgUrl =post.image ? post.image :  'https://images.pexels.com/photos/796602/pexels-photo-796602.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
 
-    const savePost = async()=>{
+    const updatePost = async()=>{
         let response;
-     try{
-         response =  await API.createPost(post)
-        if(response.isSuccess){
-         navigate('/')
+        try{
+            response =  await API.updatePost(post)
+            if(response.isSuccess){
+             navigate(`/detail/${id}`)
+            }
+    
+        }catch(err){
+            console.log(err)
         }
-
-     }catch(err){
-        return response.status(403).json({msg: `some error has ecored while fecthing post, ${err}`})
-     }
-     
+         
+   
     }
 
     
@@ -147,16 +166,16 @@ const Home = () => {
                 
                 <input type='file' id='chooseFile' onChange={(e)=> setFile(e.target.files[0])} style={{display: 'none'}}/>
 
-                <StyledInputBase placeholder='Title' name='title' onChange={(e)=> getDataFromTextfields(e)}/>
+                <StyledInputBase placeholder='Title' name='title' value={post.title} onChange={(e)=> getDataFromTextfields(e)}/>
                     <label htmlFor='chooseFile'>
                         <AddPhoto fontSize='large' />
                     </label>
-                <StyledButton variant='contained' disabled={ ((post.category) && (post.createdDate) && (post.description)  && (post.title) && (post.userName)) ? false : true } onClick={()=> savePost()} >Publish</StyledButton>
+                <StyledButton variant='contained' disabled={ ((post.category) && (post.createdDate) && (post.description)  && (post.title) && (post.userName)) ? false : true } onClick={()=> updatePost()} >Update</StyledButton>
         
 
             </StyledFormControl>
 
-        <StyledTextareaAutosize name='description' onChange={(e)=> getDataFromTextfields(e)} minRows={5} placeholder= {`what's on your mind.. `} />
+        <StyledTextareaAutosize name='description' value={post.description} onChange={(e)=> getDataFromTextfields(e)} minRows={5} placeholder= {`what's on your mind.. `} />
    
       
     </Container>

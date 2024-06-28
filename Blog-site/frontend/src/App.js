@@ -5,6 +5,8 @@ import { Route,Routes,Outlet,Navigate } from 'react-router-dom'
 import Home from './components/Home/Home'
 import Header from './components/Header/Header'
 import NewBlog from './components/Create/NewBlog'
+import Details from './components/Details/Details'
+import Update from './components/Update/Update'
 
 const PrivateRoute = ({isLoggedIn}) =>{
 
@@ -45,6 +47,13 @@ const App = () => {
         <Route path='/create' element={ <NewBlog /> } />
       </Route>
 
+      <Route path='/detail/:id' element={<PrivateRoute isLoggedIn={isLoggedIn} />} >
+        <Route path='/detail/:id' element={ <Details /> } />
+      </Route>
+
+      <Route path='/update/:id' element={<PrivateRoute isLoggedIn={isLoggedIn} />} >
+        <Route path='/update/:id' element={ <Update /> } />
+      </Route>
 
 
     </Routes>

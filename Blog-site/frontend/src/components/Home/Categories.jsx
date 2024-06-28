@@ -35,7 +35,7 @@ const Categories = ()=>{
                 {
                     category.map((e)=>(
                         <TableRow key={e.id}>
-                            <StyledLink to={`/?category=${e.category}`}>
+                            <StyledLink to={`?category=${e.category}`}>
                                 <TableCell>
                                         {e.category}
                                 </TableCell>

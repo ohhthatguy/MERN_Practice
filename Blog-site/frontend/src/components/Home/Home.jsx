@@ -4,14 +4,16 @@ import Banner from './Banner'
 import Categories from './Categories'
 import { Grid, Button, Typography, styled } from '@mui/material'
 import { Link, useSearchParams } from 'react-router-dom'
+import UserPost from './Post/UserPost'
 
-
-  const StyledGrid = styled(Grid)`
-  border: 1px solid black;
-  `
+const StyledGrid = styled(Grid)`
+border: 1px solid black;
+    padding: 10px;
+`
+ 
 
 const Home = () => {
-    // const {account} = useContext(DataContext)
+
     const [searchParams] = useSearchParams()
     const selectedCategory = searchParams.get('category');
     
@@ -21,7 +23,7 @@ const Home = () => {
     <>
         <Banner  />
         {/* container means parent and item means the child */}
-        <Grid container> 
+        <Grid container > 
             <Grid item xs={3} sd={2} md={2}>
 
               <Typography>Select a category</Typography>
@@ -32,8 +34,9 @@ const Home = () => {
                 <Button variant='contained' >Create</Button>
               </Link>
             </Grid>
-            <StyledGrid item xs={9} sd={10} md={10}>
-                <Typography>Posts</Typography>
+
+            <StyledGrid container xs={9} sd={10} md={10} >
+              <UserPost />
             </StyledGrid>
 
         </Grid>

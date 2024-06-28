@@ -1,19 +1,45 @@
 import axios from 'axios'
 import { sample_url } from './ApiMessages'
+import { getAccessToken } from '../utils/JwtToken'
 
 const API_URL = 'http://localhost:5000'
+
+const getType = (value,body)=>{
+    console.log(value)
+    if(value.params){
+        console.log("Im here in parm")
+        return {params:body}
+    }else if(value.query){
+        if(typeof body == 'object'){
+            return {query: body._id}
+        }else{
+            return {query:body}
+        }
+    }
+
+    return {}
+}
 
 const axiosInstance = axios.create({
     baseURL: API_URL,
     timeout: 10000,     //10 sec into milisecond
-    headers:{
-       
-    } 
+    // headers:{
+        
+    //         // "content-type": "application/json"
+         
+    // } 
 })
 
 
 axiosInstance.interceptors.request.use(
     function (config){ //this function activates when request( from frontend) is successful
+        // return config
+        console.log(config)
+        if(config.type.params){
+            config.params = config.type.params
+        }else if(config.type.query){
+            config.url = config.url + '/' + config.type.query
+        }
         return config
     },
     function (err){  //this function activates when request( from frontend) fails
@@ -79,7 +105,12 @@ for(const [key,value] of Object.entries(sample_url)){
         return axiosInstance({ 
             method: value.method,
             url: value.url,
-            data: body
+            data: value.method == 'delete' ? {} : body,
+            type: getType(value,body),
+            headers:{ 
+                authorization: getAccessToken()    
+            }
+            
     
         })
     }

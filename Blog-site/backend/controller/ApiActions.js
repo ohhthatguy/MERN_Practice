@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config();
 const Token = require('../model/token');
 const grid = require('gridfs-stream')
 const mongoose = require('mongoose')
+const Post = require('../model/post')
 
 
 //dont forget to export at last
@@ -66,6 +67,7 @@ const postLogIn = async(req,res)=>{
 
 const uploadFile = async(req,res)=>{
 
+    
     if(!req.file){
         return res.status(404).json({msg: "no file were found to send to server"})
     }
@@ -100,4 +102,88 @@ const getUploadedImage = async(req,res)=>{
 
 }
 
-module.exports = { postSignUp, postLogIn, uploadFile, getUploadedImage };
+
+const createPost = async(req,res)=>{
+    try{
+        const post =  new Post(req.body)
+        await post.save()
+        return res.status(200).json({msg: "post saved in db"})
+
+    }catch(err){
+        return res.status(500).json({msg: "post could be saved in db", error: err})
+
+    }
+    
+}
+
+const getAllPosts = async(req,res)=>{
+    let category = req.query.category;
+    // console.log(req)
+    let posts;
+    try{
+        if(category){
+            posts = await Post.find({category: category})
+        }else{
+            posts = await Post.find({})
+        }
+        // posts = await Post.find({})
+        return res.status(200).json(posts)
+
+    }catch(err){
+        return res.status(500).json({msg: `following error occured while fetching posts: ${err}`})
+    }
+}
+
+const getPostById = async(req,res)=>{
+    try{
+        const post = await Post.findById(req.params.id)
+        return res.status(200).json(post)
+
+
+    }catch(err){
+        return res.status(500).json({msg: `error is givena as, ${err}`})
+
+    }
+}
+
+const updatePost = async(req,res)=>{
+    try{
+        let response = await Post.findById(req.params.id)
+
+        if(!response){
+            return res.status(404).json({msg: 'searched data not found to update'})
+        }
+
+        await Post.findByIdAndUpdate(req.params.id, {
+            $set: req.body
+        })
+
+        return res.status(200).json({msg: 'post updated successfully'})
+    }catch(err){
+        return res.status(500).json({msg: `error while updating, ${err}`})
+    }
+}
+
+const deleteBlog = async(req,res)=>{
+    try{
+
+        let response = await Post.findById(req.params.id)
+
+        if(!response){
+            return res.status(404).json({msg: "data to delete is not in database"})
+        }
+
+        await Post.deleteOne({_id: req.params.id})
+        return res.status(200).json({msg: "data is delete successfully"})
+
+    }catch(err){
+        return res.status(500).json({msg: "error while deleting the blog is, " + err})
+        
+
+    }
+
+
+}
+
+
+module.exports = { postSignUp, postLogIn, uploadFile, getUploadedImage, createPost, getAllPosts, getPostById, updatePost, deleteBlog };
