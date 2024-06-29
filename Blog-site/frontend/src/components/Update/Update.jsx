@@ -1,8 +1,8 @@
-import React,{useState ,useEffect, useContext} from 'react'
+import React,{useState ,useEffect} from 'react'
 import { Box, Button, FormControl, InputBase, TextField, styled, TextareaAutosize } from '@mui/material'
 import {AddPhotoAlternateSharp as AddPhoto} from '@mui/icons-material';
 import { useSearchParams, useNavigate, useParams } from 'react-router-dom';
-import { DataContext } from '../../context/DataProvider';
+
 import { API } from '../../services/Api';
 
 const Container = styled(Box)`
@@ -45,7 +45,7 @@ const StyledTextareaAutosize = styled(TextareaAutosize)`
 
 const Home = () => {
 
-    const {account} = useContext(DataContext)
+    // const {account} = useContext(DataContext)
     const {id} = useParams();
 
     const initialUserInput = {

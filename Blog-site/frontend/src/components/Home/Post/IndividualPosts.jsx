@@ -8,6 +8,7 @@ const Container = styled(Box)`
     flex-direction: column;
     padding: 10px;
     margin-left: 10px;
+    word-break: break-word;
 `
 const Image = styled('img')`
     width: 100%;
@@ -21,14 +22,25 @@ const Image = styled('img')`
 const IndividualPosts = ({post})=>{
     const imgUrl =post.image ? post.image :  'https://images.pexels.com/photos/796602/pexels-photo-796602.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
 
+    const truncateSentence = (sentence)=> {
+        if (sentence.length > 30) {
+            return sentence.slice(0, 30 - 3) + '...';
+        }
+        return sentence;
+    }
+
+    let truncated_title = truncateSentence(post.title)
+    let truncated_description = truncateSentence(post.description)
+
+
     return (<>
     
          <Container>
             <Image src={imgUrl} alt="cover image" />
             <Typography>{post.category}</Typography>
-            <Typography>{post.title}</Typography>
+            <Typography>{truncated_title}</Typography>
             <Typography>{post.name}</Typography>
-            <Typography>{post.description}</Typography>
+            <Typography>{truncated_description}</Typography>
         </Container>
    
     </>)

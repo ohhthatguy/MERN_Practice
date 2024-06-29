@@ -5,9 +5,9 @@ import { getAccessToken } from '../utils/JwtToken'
 const API_URL = 'http://localhost:5000'
 
 const getType = (value,body)=>{
-    console.log(value)
+    // console.log(value)
     if(value.params){
-        console.log("Im here in parm")
+        // console.log("Im here in parm")
         return {params:body}
     }else if(value.query){
         if(typeof body == 'object'){
@@ -34,7 +34,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     function (config){ //this function activates when request( from frontend) is successful
         // return config
-        console.log(config)
+        // console.log(config)
         if(config.type.params){
             config.params = config.type.params
         }else if(config.type.query){
@@ -84,7 +84,7 @@ axiosInstance.interceptors.response.use(
 )
 
 const sucessfullResponse = (response) =>{
-    console.log("successfull in response")
+    // console.log("successfull in response")
 
     if(response?.status === 200){ //response could be null/undefined
         return {isSuccess: true, data: response.data}

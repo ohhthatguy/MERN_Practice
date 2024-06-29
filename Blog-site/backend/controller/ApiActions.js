@@ -6,6 +6,7 @@ const Token = require('../model/token');
 const grid = require('gridfs-stream')
 const mongoose = require('mongoose')
 const Post = require('../model/post')
+const Comment = require('../model/comment')
 
 
 //dont forget to export at last
@@ -185,5 +186,52 @@ const deleteBlog = async(req,res)=>{
 
 }
 
+const postComment = async(req,res)=>{
+    try{
+        let data = new Comment(req.body)
+        await data.save()
 
-module.exports = { postSignUp, postLogIn, uploadFile, getUploadedImage, createPost, getAllPosts, getPostById, updatePost, deleteBlog };
+        return res.status(200).json({msg: "comment saved succesfully"})
+    }catch(err){
+        return res.status(500).json({msg: `problem while saving commnets, ${err}`})
+        
+    }
+
+
+}
+
+const getAllComments = async(req,res)=>{
+    try{
+        let comments = await Comment.find({postId: req.params.id})
+        // let comments = await Comment.findById(req.params.id)
+
+        if(!comments){
+            return res.status(404).json({msg: "comment not found"})
+        }
+        return res.status(200).json(comments)
+    }catch(err){
+        return res.status(500).json({msg: `problem while fetching comments, ${err}`})
+
+    }
+    
+
+}
+
+const deleteComment=async(req,res)=>{
+    try{
+
+        let response = await Comment.findById(req.params.id)
+
+        if(!response){
+        return res.status(404).json({msg: `comment of given id not found`})
+        }
+
+        await Comment.deleteOne({_id: req.params.id})
+        return res.status(200).json({msg: "data is delete successfully"})
+
+    }catch(err){
+        return res.status(500).json({msg: `some error in backend while deleting comment, ${err}`})
+    }
+}
+
+module.exports = { postSignUp, postLogIn, uploadFile, getUploadedImage, createPost, getAllPosts, getPostById, updatePost, deleteBlog, postComment, getAllComments, deleteComment };

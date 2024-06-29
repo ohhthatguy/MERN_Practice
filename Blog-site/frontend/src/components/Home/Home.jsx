@@ -24,7 +24,7 @@ const Home = () => {
         <Banner  />
         {/* container means parent and item means the child */}
         <Grid container > 
-            <Grid item xs={3} sd={2} md={2}>
+            <Grid item xs={12} sd={2} md={2}>
 
               <Typography>Select a category</Typography>
 
@@ -35,7 +35,7 @@ const Home = () => {
               </Link>
             </Grid>
 
-            <StyledGrid container xs={9} sd={10} md={10} >
+            <StyledGrid container xs={12} sd={10} md={10} >
               <UserPost />
             </StyledGrid>
 

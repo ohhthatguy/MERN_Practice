@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { API } from "../../../services/Api"
-import { Grid,styled } from "@mui/material"
+import { Grid } from "@mui/material"
 import IndividualPosts from "./IndividualPosts"
 import {useSearchParams, Link} from 'react-router-dom'
 
@@ -24,7 +24,7 @@ const UserPost = () =>{
                 console.log("Im here," + category)
                }else{
                 response = await API.getAllPosts({})
-                console.log("Im here at normal")
+                // console.log("Im here at normal")
 
                }
                  

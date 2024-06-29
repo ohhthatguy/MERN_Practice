@@ -7,7 +7,8 @@ const upload = require('../utils/upload')
 
 
 //don't forget to import the API callbacks/ actions
-const {postSignUp, postLogIn, uploadFile, getUploadedImage, createPost, getAllPosts, getPostById, updatePost, deleteBlog} = require('../controller/ApiActions')
+const {postSignUp, postLogIn, uploadFile, getUploadedImage, createPost, getAllPosts, getPostById, updatePost, deleteBlog, postComment, getAllComments, deleteComment} = require('../controller/ApiActions')
+
 const {authorizeToken} = require('../utils/authorizeToken')
 
 
@@ -38,6 +39,15 @@ router.put('/update/:id', authorizeToken, updatePost)
 
 //delete the post
 router.delete('/delete/:id', authorizeToken, deleteBlog)
+
+//post comment
+router.post('/comment/new', authorizeToken, postComment)
+
+//fetch all comments
+router.get('/comment/:id', authorizeToken, getAllComments);
+
+//delete comment
+router.delete('/remove/comment/:id', authorizeToken, deleteComment)
 
 
 
